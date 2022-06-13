@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import AutoHeightImage from 'react-native-auto-height-image';
+import {useNavigation} from '@react-navigation/native';
 import {
   SafeAreaView,
   StyleSheet,
@@ -11,25 +12,28 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Item = ({item, navigation}) => (
-  <View>
-    <TouchableOpacity
-      onPress={() => {
-        console.log('====You tapped the item', item.id);
-        navigation.navigate('Show', {videoId: item.id});
-      }}>
-      <AutoHeightImage
-        width={300}
-        source={{
-          uri: item.urlThumb,
-        }}
-      />
-    </TouchableOpacity>
-    <Text style={styles.title}>{item.name}</Text>
-  </View>
-);
+const Item = ({item}) => {
+  const navigation = useNavigation();
+  return (
+    <View>
+      <TouchableOpacity
+        onPress={() => {
+          console.log('====You tapped the item', item.id);
+          navigation.navigate('Show', {video: item});
+        }}>
+        <AutoHeightImage
+          width={300}
+          source={{
+            uri: item.urlThumb,
+          }}
+        />
+      </TouchableOpacity>
+      <Text style={styles.title}>{item.name}</Text>
+    </View>
+  );
+};
 
-export default function Index({navigation}) {
+export default function Index() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
