@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import AutoHeightImage from 'react-native-auto-height-image';
 import {useNavigation} from '@react-navigation/native';
+import IPService from '../../services/IPService';
 import {
   SafeAreaView,
   StyleSheet,
@@ -37,6 +38,7 @@ export default function Index() {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
+    IPService.saveUserInfo();
     const fetchData = async () => {
       const response = await fetch(`https://niklab.herokuapp.com/videos/all`);
       const result = await response.json();
